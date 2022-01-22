@@ -1,23 +1,12 @@
 import React, { useState } from 'react';
 import { ethers, Contract } from 'ethers';
 
-import SideBar from './SideBar';
-import Connections from './Connections';
-import DashBoard from './DashBoard';
-import Withdraw from './Withdraw';
-import Store from './Store';
-import Contact from './Contact';
-import StoreErc from './StoreErc';
-import WithdrawErc from './WithdrawErc';
-
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from './config';
-
-import logo from './piggy.png';
-
+import "./customFont.css";
 import "./normalize.css";
 import "./styles.css";
-import { wait } from '@testing-library/user-event/dist/utils';
 
+import TopBlock from "./TopBlock";
+import Mint from "./Mint";
 
 
 
@@ -27,72 +16,9 @@ function App() {
   const [connected, setConnected] = useState(false);
   const [account, setAccount] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
-  const [accountBalance, setAccountBalance] = useState(0);
-  const [contractBalance, setContractBalance] = useState(0);
-  const [accountStoredBalance, setAccountStoredBalance] = useState(0);
   const [contract, setContract] = useState(undefined);
 
-  const [withdrawMenuOpened, setWithdrawMenuOpened] = useState(false);
-  const [storeMenuOpened, setStoreMenuOpened] = useState(false);
-  const [dashboardMenuOpened, setDashboardMenuOpened] = useState(true);
-  const [contactMenuOpened, setContactMenuOpened] = useState(false);
-  const [ercWithdrawMenuOpened, setErcWithdrawMenuOpened] = useState(false);
-  const [ercStoreMenuOpened, setErcStoreMenuOpened] = useState(false);
-
-  const openStoreMenu = () => {
-    setDashboardMenuOpened(false);
-    setErcWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(false);
-    setWithdrawMenuOpened(false);
-    setContactMenuOpened(false);
-    setStoreMenuOpened(true);
-  }
-
-  const openWithdrawMenu = () => {
-    setDashboardMenuOpened(false);
-    setStoreMenuOpened(false);
-    setErcWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(false);
-    setContactMenuOpened(false);
-    setWithdrawMenuOpened(true);
-  }
-
-  const openDashboardMenu = () => {
-    setStoreMenuOpened(false);
-    setWithdrawMenuOpened(false);
-    setContactMenuOpened(false);
-    setErcWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(false);
-    setDashboardMenuOpened(true);
-  }
-
-  const openContactMenu = () => {
-    setStoreMenuOpened(false);
-    setWithdrawMenuOpened(false);
-    setDashboardMenuOpened(false);
-    setErcWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(false);
-    setContactMenuOpened(true);
-  }
-
-  const openErcStoreMenu = () => {
-    setDashboardMenuOpened(false);
-    setWithdrawMenuOpened(false);
-    setContactMenuOpened(false);
-    setStoreMenuOpened(false);
-    setErcWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(true);
-  }
-
-  const openErcWithdrawMenu = () => {
-    setDashboardMenuOpened(false);
-    setStoreMenuOpened(false);
-    setContactMenuOpened(false);
-    setWithdrawMenuOpened(false);
-    setErcStoreMenuOpened(false);
-    setErcWithdrawMenuOpened(true);
-  }
-
+  /*
   const login = async () => {
     try {
       let newProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -118,95 +44,54 @@ function App() {
     }
 
   }
-
-  const storeFunds = async amount => {
-    const tx = await signer.sendTransaction({
-      to: CONTRACT_ADDRESS,
-      value: ethers.utils.parseEther(amount)
-    });
-    const receipt = await tx.wait();
-    if(receipt.status) {
-      login();
-    } else {
-      alert("Error in transaction!");
-      window.location.reload();
-    }
-  }
-
-  const storeErcFunds = async (token, amount) => {
-    const tx = await contract.depositErcToken(token, ethers.utils.parseUnits(amount, 18));
-    const receipt = await tx.wait();
-    if(receipt.status) {
-      login();
-    } else {
-      alert("Error in transaction!");
-      window.location.reload();
-    }
-  }
-
-  const withdrawErcFunds = async (token, amount) => {
-    const tx = await contract.withdrawErcToken(token, ethers.utils.parseUnits(amount, 18));
-    const receipt = await tx.wait();
-    if(receipt.status) {
-      window.location.reload();
-    } else {
-      alert("Error in transaction!");
-      window.location.reload();
-    }
-  }
-
-  const withdrawFunds = async amount => {
-    const tx = await contract.withdrawEther(ethers.utils.parseEther(amount));
-    const receipt = await tx.wait();
-    if(receipt.status) {
-      login();
-    } else {
-      alert("Error in transaction!");
-      window.location.reload();
-    }
-  }
-
-
-  const getBalanceOf = async address => {
-    let balance = await provider.getBalance(address);
-    return balance;
-  }
-
-
+  */
+  
   return (
     <>
-      <div className='mainContainer'>
-        <SideBar openErcWithdrawMenu={openErcWithdrawMenu} openErcStoreMenu={openErcStoreMenu} openWithdrawMenu={openWithdrawMenu} openStoreMenu={openStoreMenu} openDashboardMenu={openDashboardMenu} openContactMenu={openContactMenu} />
+      <div className='lg-bg'>
+        <div className='top'>
+          <div className='top-nav'>
+            <nav className='navbar navbar-expand-lg navbar-dark row container'>
+              <a className="navbar-brand col-lg-2" href=''>Logo Here</a>
 
-        <div className='right'>
-          <Connections login={login} setConnected={setConnected} connected={connected} account={account} />
+              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+                  <span className="navbar-toggler-icon"></span>
+              </button>
 
-          {dashboardMenuOpened ? (
-            <DashBoard openWithdrawMenu={openWithdrawMenu} openStoreMenu={openStoreMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
+              <div className="collapse navbar-collapse col-lg-8" id="navbarTogglerDemo02">
 
-          {withdrawMenuOpened ? (
-            <Withdraw withdrawFunds={withdrawFunds} openDashboardMenu={openDashboardMenu} openStoreMenu={openStoreMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <a className="nav-link" href="#footer">About</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#pricing">Roadmap</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#cta">Mint</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#cta">WhitePaper</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#cta">DApp</a>
+                  </li>
+                </ul>
 
-          {storeMenuOpened ? (
-            <Store storeFunds={storeFunds} openWithdrawMenu={openWithdrawMenu} openDashboardMenu={openDashboardMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
+              </div>
 
-          {contactMenuOpened ? (
-            <Contact openDashboardMenu={openDashboardMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
+              <div className='col-lg-2'></div>
 
-          {ercWithdrawMenuOpened ? (
-            <WithdrawErc withdrawErcFunds={withdrawErcFunds} openDashboardMenu={openDashboardMenu} openStoreMenu={openStoreMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
+            </nav>
+          </div>
 
-          {ercStoreMenuOpened ? (
-            <StoreErc storeErcFunds={storeErcFunds} openWithdrawMenu={openWithdrawMenu} openDashboardMenu={openDashboardMenu} login={login} connected={connected} setConnected={setConnected} accountBalance={accountBalance} contractBalance={contractBalance} accountStoredBalance={accountStoredBalance} />
-          ) : null}
-          
-        </div>
+          <TopBlock />
+
+          </div>
       </div>
+
+      <Mint />
+      
 
     </>
   );
