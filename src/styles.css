@@ -55,7 +55,7 @@ a {
 }
 
 .top .top-nav {
-    position: fixed;
+    position: absolute;
     z-index: 2;
     width: 100%;
 }
@@ -107,12 +107,18 @@ a {
     flex-direction: column;
     align-items: center;
     background: linear-gradient(0deg, var(--principal),  var(--cuarto) 90%);
+    justify-content: center;
+}
+
+.mint-block h2 {
+    margin-bottom: 2rem;
+    font-size: 4rem;
 }
 
 .nft-box {
     height: 80%;
     background-color: var(--secundario);
-    margin: auto;
+    margin: 0 auto 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     padding: 0;

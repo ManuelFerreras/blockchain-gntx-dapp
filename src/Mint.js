@@ -2,13 +2,13 @@ import React from "react";
 
 import nft from './nft1.jpeg';
 
-export default () => {
+export default ({ login, connected }) => {
 
     return(
 
         <>
         
-            <div className="mint-block">
+            <div className="mint-block" id="mint">
 
                 <h2>Mint</h2>
 
@@ -32,7 +32,12 @@ export default () => {
                     </div>
 
                     <div className="nft-info">
-                        <button className="btn btn-primary btn-connect">Connect Wallet</button>
+                        {connected ? (
+                            <button className="btn btn-primary btn-connect">Connected</button>
+                        ) : (
+                            <button className="btn btn-primary btn-connect" onClick={() => login()}>Connect Wallet</button>
+                        )}
+                        
                         <div className="nft-info-text">
                             <h3>NFT Name</h3>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi nemo expedita temporibus dignissimos sint quam eaque ipsum illum.</p>

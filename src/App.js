@@ -16,26 +16,18 @@ function App() {
   const [connected, setConnected] = useState(false);
   const [account, setAccount] = useState(undefined);
   const [signer, setSigner] = useState(undefined);
-  const [contract, setContract] = useState(undefined);
 
-  /*
+
   const login = async () => {
     try {
       let newProvider = new ethers.providers.Web3Provider(window.ethereum);
       if(newProvider != undefined) {
         let newAccount = await window.ethereum.request({ method: 'eth_requestAccounts' });
         let newSigner = await newProvider.getSigner();
-        let newAccountBalance = await newProvider.getBalance(newAccount[0]);
-        let newContractBalance = await newProvider.getBalance(CONTRACT_ADDRESS);
-        let newContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, newSigner);
-        let newAccountStoredBalance = await newContract.getBalanceOf(newAccount[0]);
         setProvider(newProvider);
         setAccount(newAccount);
         setSigner(newSigner);
-        setAccountBalance(ethers.utils.formatEther(newAccountBalance));
-        setContractBalance(ethers.utils.formatEther(newContractBalance));
-        setAccountStoredBalance(ethers.utils.formatEther(newAccountStoredBalance));
-        setContract(newContract);
+        setConnected(true);
       } else {
         alert("Please Install Metamask.");
       }
@@ -44,7 +36,7 @@ function App() {
     }
 
   }
-  */
+
   
   return (
     <>
@@ -68,7 +60,7 @@ function App() {
                     <a className="nav-link" href="#pricing">Roadmap</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#cta">Mint</a>
+                    <a className="nav-link" href="#mint">Mint</a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="#cta">WhitePaper</a>
@@ -90,7 +82,7 @@ function App() {
           </div>
       </div>
 
-      <Mint />
+      <Mint login={ login } connected={ connected } />
       
 
     </>
